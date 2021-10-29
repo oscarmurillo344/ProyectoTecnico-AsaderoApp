@@ -1,0 +1,16 @@
+.contenido{
+    margin-top: 60px;
+}
+
+
+.contenedor{
+    height: 100px;
+}
+
+.margen{
+    margin-right: 100%;
+    padding: 1%;
+}
+.formularioInventario{
+    width: 80%; margin: auto; margin-top: 2%;
+}

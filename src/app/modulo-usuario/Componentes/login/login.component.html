@@ -1,0 +1,27 @@
+  <mat-card class="centar">
+    <mat-card-header class="d-block text-center">
+       <h2>Asadero de Pollos Andy's</h2>
+    </mat-card-header>
+    <mat-card-content [formGroup]="UserForm" >
+        <mat-form-field appearance="fill" class="w-100" >
+            <mat-label>Usuario</mat-label>
+            <input matInput type="text" formControlName="usuario">
+            <mat-hint>ingrese usuario valido</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100 mt-2">
+              <mat-label>password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasena" (keyup.enter)="LogIn()">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+        </mat-form-field>
+          <mat-error *ngIf="Validar" class="mt-1">
+            contrase&ntilde;a o usuario incorrecto
+          </mat-error>
+        </mat-card-content>
+    <mat-card-actions >
+        <button (click)="LogIn()" mat-raised-button color="warn"class="w-100" >
+          <mat-icon>login</mat-icon>
+          Iniciar Sesi&oacute;n</button>
+    </mat-card-actions>
+</mat-card>

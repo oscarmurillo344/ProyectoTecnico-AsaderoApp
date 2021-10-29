@@ -1,0 +1,47 @@
+<mat-toolbar class="FixedCabecera" *ngIf="VerMenu$ | async">
+    <a (click)="sidenav.toggle()" >
+        <img src="../../../../assets/imagenes/pollo.webp" class="mt-2" width="110px" height="70px" />
+    </a>
+      <div class="mr-auto">
+        <h2   class=" tituloPrincipal white d-none d-sm-flex">APP ASADERO</h2>
+      </div>
+    <span [matBadge]="notificacion"
+          matBadgeOverlap="false"
+          [matBadgeHidden]="notificacion===0">
+      <a  routerLink="ventas/carrito">
+      <mat-icon class="white">
+        shopping_cart
+      </mat-icon>
+    </a>
+  </span>
+
+</mat-toolbar>
+<mat-sidenav-container class="w-100 h-100" >
+  <mat-sidenav #sidenav class="NavLateral"
+                      [attr.role]="cerrarNav? 'dialog' : 'navigation'"
+                      [mode]="cerrarNav ? 'side' : 'over'"
+                      fixedInViewport="true"
+                      fixedTopGap="70"
+                      [opened]="cerrarNav">
+
+
+        <mat-nav-list class="mt-2">
+          <h2   class="mx-5 white">Menu</h2>
+            <a mat-list-item *ngFor="let menu of ListaMenu; index as i"
+              [routerLink]="menu.ruta"
+              (click)="!cerrarNav ? sidenav.toggle() : ''"
+              routerLinkActive="activar"
+              class="white my-1">
+                <mat-icon class="mr-1">
+                  {{ menu.icon }}
+                </mat-icon>
+                {{ menu.nombre }}
+            </a>
+        </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="Contenedor">
+    <router-outlet
+    (activate)='onActivate($event)'
+    (deactivate)='onDeactivate($event)'></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

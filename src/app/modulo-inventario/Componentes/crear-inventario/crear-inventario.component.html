@@ -1,0 +1,60 @@
+<div class="contenido">
+  <mat-tab-group mat-stretch-tabs >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">add_task</mat-icon>
+          Crear Producto
+        </ng-template>
+        <mat-card class="formularioInventario">
+          <form [formGroup]="ProductForm">
+              <mat-form-field appearance="standard" style="width: 100%;" >
+                  <mat-label>Nombre</mat-label>
+                  <input matInput type="text" formControlName="nombre">
+                </mat-form-field>
+                <mat-form-field appearance="standard" style="width: 100%;">
+                  <mat-label>Selecciona: </mat-label>
+                  <mat-select formControlName="tipo">
+                    <mat-option value="platos">plato</mat-option>
+                    <mat-option value="bebidas">bebida</mat-option>
+                    <mat-option value="combos">combo</mat-option>
+                    <mat-option value="porciones">porcion</mat-option>
+                    <mat-option value="mercaderia">mercaderia</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <cdk-virtual-scroll-viewport *ngIf="ProductForm.value.tipo === 'combos'"
+                itemSize="10" class="contenedor mat-elevation-z2">
+                <mat-label class="margen">Seleccione producto: </mat-label>
+                <mat-checkbox  *ngFor="let producto of ComboInventario"
+                (change)="valueChange($event)" [value]="producto?.id +''" class="margen">
+                     {{ producto.producto?.nombre }}
+                </mat-checkbox>
+                </cdk-virtual-scroll-viewport>
+                <mat-form-field appearance="standard" style="width: 100%;" >
+                  <mat-label>Precio </mat-label>
+                  <input matInput type="number" formControlName="precio">
+                </mat-form-field>
+                <mat-form-field appearance="standard" style="width: 100%;" >
+                  <mat-label>Presa </mat-label>
+                  <input matInput type="number" (keyup.enter)="CrearProduct()" formControlName="presa">
+                </mat-form-field>
+          </form>
+            <mat-card-actions>
+              <button mat-button (click)="CrearProduct()" [disabled]="!ProductForm.valid"
+              mat-raised-button color="warn" style="width: 100%; text-align: center;" >
+                  Crear
+                </button>
+            </mat-card-actions>
+        </mat-card>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">edit</mat-icon>
+          Editar y Eliminar
+          <mat-icon class="example-tab-icon">delete_forever</mat-icon>
+        </ng-template>
+        <app-editar-inventario></app-editar-inventario>
+      </mat-tab>
+
+    </mat-tab-group>
+</div>
