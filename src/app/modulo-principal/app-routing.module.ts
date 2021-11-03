@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {path: 'auth', loadChildren: () => import('../modulo-usuario/usuario.module').then(m => m.UsuarioModule)},
-  {path: 'ventas', loadChildren: () => import('../modulo-venta/ventas.module').then(m => m.VentasModule) }
+  {path: 'venta', loadChildren: () => import('../modulo-venta/ventas.module').then(m => m.VentasModule)},
+  { path: 'inventario', loadChildren: () => import('../modulo-inventario/inventarios.module').then(m => m.InventariosModule) },
+{ path: 'gasto', loadChildren: () => import('../modulo-gasto/gastos.module').then(m => m.GastosModule) },
+{ path: 'control', loadChildren: () => import('../modulo-control/control.module').then(m => m.ControlModule) }
 
 ];
 

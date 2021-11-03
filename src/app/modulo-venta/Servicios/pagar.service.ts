@@ -4,6 +4,8 @@ import { Factura } from '../Modelos/factura';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Mensaje } from 'src/app/modulo-principal/Modelos/mensaje';
+import { EntreFecha } from 'src/app/modulo-control/Modelos/EntreFecha';
+import { VentasDay } from 'src/app/modulo-control/Modelos/VentasDay';
 
 
 @Injectable({
@@ -31,7 +33,7 @@ export class PagarService {
     return this.http.get<number>(this.pagarURL+'numero');
   }
 
-  /*public TotalDay(usuario:string):Observable<VentasDay[]>{
+  public TotalDay(usuario:string):Observable<VentasDay[]>{
     return this.http.get<VentasDay[]>(this.pagarURL+'totalDay/'+usuario);
   }
 
@@ -53,6 +55,6 @@ export class PagarService {
 
   public TotalFechasComp(Fecha:EntreFecha):Observable<VentasDay[]>{
     return this.http.post<VentasDay[]>(this.pagarURL+'totalfechasComp',Fecha)
-    }*/
+    }
 }
 

@@ -8,22 +8,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
+import { ControlModule } from '../modulo-control/control.module';
+import { GastosModule } from '../modulo-gasto/gastos.module';
 import { InventariosModule } from '../modulo-inventario/inventarios.module';
 import { MaterialModule } from '../modulo-material/material.module';
 import { UsuarioModule } from '../modulo-usuario/usuario.module';
 import { VentasModule } from '../modulo-venta/ventas.module';
 import { AppRoutingModule } from './app-routing.module';
+import { CargandoComponent } from './Componentes/cargando/cargando.component';
 import { ErrorComponent } from './Componentes/error/error.component';
 import { NavMenuComponent } from './Componentes/nav-menu/nav-menu.component';
 import { InterceptorTokenService } from './interceptor/interceptor-token.service';
 import { InterceptorResponse } from './interceptor/interceptorResponse.service';
 import { DataMenuService } from './Servicios/data-menu.service';
+import { LoadingService } from './Servicios/loading.service';
 registerLocaleData(localeEs,"es")
 
 @NgModule({
   declarations: [
     NavMenuComponent,
-    ErrorComponent
+    ErrorComponent,
+    CargandoComponent
   ],
   imports: [
     BrowserModule,
@@ -39,13 +44,16 @@ registerLocaleData(localeEs,"es")
     }),
     UsuarioModule,
     VentasModule,
-    InventariosModule
+    InventariosModule,
+    GastosModule,
+    ControlModule
   ],
   exports: [
     ErrorComponent
   ],
   providers: [
     DataMenuService,
+    LoadingService,
     {
       provide: LOCALE_ID,
       useValue: 'es'

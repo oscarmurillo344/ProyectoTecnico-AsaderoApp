@@ -26,20 +26,37 @@
 
 
         <mat-nav-list class="mt-2">
-          <h2   class="mx-5 white">Menu</h2>
-            <a mat-list-item *ngFor="let menu of ListaMenu; index as i"
-              [routerLink]="menu.ruta"
-              (click)="!cerrarNav ? sidenav.toggle() : ''"
-              routerLinkActive="activar"
-              class="white my-1">
-                <mat-icon class="mr-1">
-                  {{ menu.icon }}
-                </mat-icon>
-                {{ menu.nombre }}
-            </a>
+          <h2 class="mx-5 white">Menu</h2>
+         <div  *ngFor="let menu of ListaMenu; index as i">
+          <mat-list-item 
+            *ngIf="menu.nombre != 'Cerrar sesion'"
+            [routerLink]="menu.ruta"
+            (click)="!cerrarNav ? sidenav.toggle() : ''"
+            routerLinkActive="activar"
+            class="white my-1">
+          <mat-icon class="mr-1">
+            {{ menu.icon }}
+          </mat-icon>
+          {{ menu.nombre }}
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item 
+            *ngIf="menu.nombre == 'Cerrar sesion'" 
+            routerLinkActive="activar" 
+            class="white my-1"
+            [routerLink]="menu.ruta" 
+            (click)="logOut()" 
+            (click)="sidenav.toggle()">
+        <mat-icon>
+          logout 
+        </mat-icon>
+        Cerrar sesión
+      </mat-list-item>
+          </div>
         </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="Contenedor">
+    <app-cargando *ngIf="VerCargar | async"></app-cargando>
     <router-outlet
     (activate)='onActivate($event)'
     (deactivate)='onDeactivate($event)'></router-outlet>

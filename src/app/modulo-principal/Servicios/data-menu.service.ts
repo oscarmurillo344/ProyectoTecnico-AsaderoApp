@@ -6,6 +6,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class DataMenuService {
 
   VerMenu = new EventEmitter<boolean>()
+  CambioDispositivo = new EventEmitter<boolean>()
   Notificacion = new EventEmitter<number>()
   NombreUsuario = new EventEmitter<string>()
   MenuLista = new EventEmitter<string[]>()
@@ -13,7 +14,8 @@ export class DataMenuService {
   pollo: number = 0
   presa: number = 0
 
-  constructor() { }
+  constructor() { 
+  }
 
   AbrirMenu(): void {
     this.EstadoVerMenu = true

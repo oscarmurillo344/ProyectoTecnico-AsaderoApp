@@ -16,12 +16,12 @@ import { TokenServiceService } from 'src/app/modulo-principal/Servicios/token-se
 })
 export class PrincipalVentasComponent implements OnInit, AfterContentInit{
 
-  platos:Array<ListaProducto>;
-  bebidas:Array<ListaProducto>;
-  combos:Array<ListaProducto>;
-  porciones:Array<ListaProducto>;
-  carrito:Array<ListaProducto>;
-  productLista:Array<Inventario>;
+  platos:Array<ListaProducto> = []
+  bebidas:Array<ListaProducto> = []
+  combos:Array<ListaProducto> = []
+  porciones:Array<ListaProducto> = []
+  carrito:Array<ListaProducto> = []
+  productLista!:Array<Inventario>;
   update?:updatePollo;
   buscar:string='';
   displayedColumns:string[] = ['agregar', 'Nombre', 'sumar'];
@@ -32,42 +32,41 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
               private _dataMenu:DataMenuService,
               private local: LocalstorageService,
               )
-  {
-    this.platos=new Array<ListaProducto>()
-    this.bebidas=new Array<ListaProducto>()
-    this.combos=new Array<ListaProducto>()
-    this.porciones=new Array<ListaProducto>()
-    this.carrito=new Array<ListaProducto>()
-    this.productLista=new Array<Inventario>()
-    }
+  {}
 
 
   ngAfterContentInit() {
       setTimeout(() => {
         this._dataMenu.SetNombreUsuario(this.token.getUser());
         this._dataMenu.SetMenuLista(this.token.getAuth())
+        if(this.token.getToken() && !this.token.TokenExpirado()){
+          this._dataMenu.AbrirMenu()
+          this._dataMenu.CambioDispositivo.emit(!this.detectarDispositivo())
+        }
       });
     }
 
   ngOnInit() {
-
-    this.llenarListas();
     if(this.local.GetStorage('DataCarrito'))this.carrito=this.local.GetStorage('DataCarrito');
+    this.llenarListas();
     this.__servicioPro.listarpollo()
     .subscribe((data:updatePollo)=>{
-      if(data.pollo!==undefined){
        this._dataMenu.pollo=data.pollo;
        this._dataMenu.presa=data.presa;
        this.local.SetStorage("pollos",new updatePollo(this._dataMenu.pollo,this._dataMenu.presa));
-      }else{
-       this._dataMenu.pollo=0;
-       this._dataMenu.pollo=0;
-       this.local.SetStorage("pollos",new updatePollo(0,0));
-      }
      },()=> this.local.SetStorage("pollos",new updatePollo(0,0)))
   }
 
-
+  detectarDispositivo():boolean{
+    var valor:boolean=false;
+      if( navigator.userAgent.match(/Android/i))
+          valor=true
+      if(navigator.userAgent.match(/webOS/i))
+          valor=false
+      if(navigator.userAgent.match(/iPhone/i))
+        valor=true
+    return valor
+  }
   llenarListas():void
   {
     this.productLista=this.local.GetStorage("listaProducto");
@@ -78,17 +77,13 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
     this.__servicioPro.listarInventartio()
     .subscribe((data:Inventario[]) => {
       this.local.SetStorage("listaProducto",data);
-     this.productLista=this.local.GetStorage("listaProducto");
+     this.productLista = data
      this.llenarTabla();
-    },(err:any) =>{
-      this.mensaje.error("Cargando los productos","Error");
-;
-    }
-    );
+    });
     }
   }
 
-  llenarTabla():void{
+    llenarTabla():void{
     for (let index = 0; index < this.productLista.length ;index++) {
       switch (this.productLista[index].producto.tipo) {
         case 'platos':

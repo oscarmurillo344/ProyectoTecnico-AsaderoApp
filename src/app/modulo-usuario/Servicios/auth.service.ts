@@ -6,6 +6,7 @@ import { LoginUsuario } from "../Modelos/loginUsuario";
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Mensaje } from 'src/app/modulo-principal/Modelos/mensaje';
+import { Usuario } from '../Modelos/Usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
 
   constructor(private http:HttpClient) { }
 
-  public nuevoUser(newUser:NuevoUsuario): Observable<any>{
+  public nuevoUser(newUser:NuevoUsuario): Observable<Mensaje>{
     return this.http.post<any>(this.authURL+'nuevo',newUser);
   }
 
@@ -28,8 +29,8 @@ export class AuthService {
     return this.http.post<any>(environment.UrlDesarrollo+'oauth/token',params.toString());
   }
 
-  public ListarUsuario():Observable<NuevoUsuario[]>{
-    return this.http.get<NuevoUsuario[]>(this.authURL+'listaUsu');
+  public ListarUsuario():Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(this.authURL+'listaUsu');
   }
 
   public EliminarUser(id:number): Observable<Mensaje>{

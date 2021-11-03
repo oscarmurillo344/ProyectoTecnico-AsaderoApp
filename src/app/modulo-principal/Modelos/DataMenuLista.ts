@@ -6,7 +6,7 @@ export const DataMenuLista: MenuLista[] =
     nombre: "Inicio",
     icon:"home",
     default: true,
-    ruta: "ventas/inicio",
+    ruta: "venta/inicio",
     permisos: ["ROLE_ADMIN","ROLE_USER"]
   },
   {
@@ -21,14 +21,14 @@ export const DataMenuLista: MenuLista[] =
     nombre: "Gastos",
     icon:"pending_actions",
     default: true,
-    ruta: "ventas/inicio",
+    ruta: "gasto/ingresar",
     permisos: ["ROLE_ADMIN","ROLE_USER"]
   },
   {
     nombre: "Control",
     icon:"trending_up",
     default: true,
-    ruta: "ventas/inicio",
+    ruta: "control/controlventas",
     permisos: ["ROLE_ADMIN"]
 
   },
@@ -36,7 +36,7 @@ export const DataMenuLista: MenuLista[] =
     nombre: "Usuarios",
     icon:"person_add",
     default: true,
-    ruta: "ventas/inicio",
+    ruta: "auth/usuarios",
     permisos: ["ROLE_ADMIN"]
 
   },
@@ -44,8 +44,8 @@ export const DataMenuLista: MenuLista[] =
     nombre: "Cerrar sesion",
     icon:"exit_to_app",
     default: true,
-    ruta: "ventas/inicio",
-    permisos: ["ROLE_ADMIN","ROLE_EMP"]
+    ruta: "auth/login",
+    permisos: ["ROLE_ADMIN","ROLE_USER"]
 
   }
 ]

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import { DataMenuService } from 'src/app/modulo-principal/Servicios/data-menu.service';
@@ -13,9 +13,9 @@ import { AuthService } from '../../Servicios/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
-  UserForm: FormGroup;
+  UserForm!: FormGroup;
   Validar: boolean=false;
   hide=true;
   roles:string[]=[];
@@ -24,23 +24,18 @@ export class LoginComponent implements OnInit, OnDestroy {
             private mensaje:ToastrService,
             private token:TokenServiceService,
             private Servicio_login:AuthService,
-            public _dataMenu:DataMenuService)
+            private fb: FormBuilder)
     {
-   this.UserForm=this.crearFormulario();
+   this.crearFormulario();
    }
 
   ngOnInit() {
-   setTimeout( ()=>  this._dataMenu.CerrarMenu())
-  }
-
-  ngOnDestroy(): void {
-    setTimeout( ()=>  this._dataMenu.AbrirMenu())
   }
 
   crearFormulario(){
-    return new FormGroup({
-     usuario: new FormControl('',Validators.required),
-     contrasena: new FormControl('',Validators.required)
+    this.UserForm = this.fb.group({
+     usuario:     ['',Validators.required],
+     contrasena:  ['',Validators.required]
     });
   }
 
@@ -50,12 +45,12 @@ export class LoginComponent implements OnInit, OnDestroy {
      this.Servicio_login.LogIn(loginusu).subscribe(
         (data: jwtDTO) => {
         this.Validar=false;
-        this.token.setToken("")
+        this.token.setToken(data.access_token)
         var Usuario = this.token.ObtenerData()
         this.token.setUser(Usuario.user_name)
         this.token.setAuth(Usuario.authorities)
         this.mensaje.success("sesión iniciada","información");
-        this.route.navigate(["ventas/inicio"])
+        this.route.navigate(["venta/inicio"])
     }, ()=> this.Validar = true)
     }else{
       this.mensaje.info("Formulario invalido", "Informacion")
